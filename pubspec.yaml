@@ -1,0 +1,33 @@
+name: still_camera
+description: A free native vintage camera. Every look, every resolution.
+publish_to: none
+version: 1.0.0+1
+environment:
+  sdk: '>=3.12.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  camera: ^0.12.2
+  gal: ^2.3.3
+  image: ^4.12.0
+  image_picker: ^1.2.4
+  path_provider: ^2.1.6
+  share_plus: ^13.3.1
+  shared_preferences: ^2.5.6
+dev_dependencies:
+  integration_test:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/sample.jpg
+    - assets/fonts/LICENSE.txt
+  fonts:
+    - family: StillSans
+      fonts:
+        - asset: assets/fonts/StillSans-Regular.ttf
+        - asset: assets/fonts/StillSans-Bold.ttf
+          weight: 700

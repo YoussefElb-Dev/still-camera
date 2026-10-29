@@ -1,0 +1,68 @@
+name: Build APK and IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mobile-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_SUPPRESS_ANALYTICS: true
+
+jobs:
+  android:
+    name: Android APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: '3.47.8'
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze --no-pub
+      - run: flutter test --no-pub
+      - run: flutter build apk --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Still-Camera-Android
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 14
+
+  ios:
+    name: iPhone IPA (for sideload signing)
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: '3.47.8'
+          cache: true
+      - run: flutter pub get
+      - name: Compile for physical iPhones
+        run: flutter build ios --release --no-codesign
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p build/ipa/Payload
+          cp -R build/ios/iphoneos/Runner.app build/ipa/Payload/Still.app
+          cd build/ipa
+          zip -q -r -y Still-Camera-unsigned.ipa Payload
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Still-Camera-iPhone-unsigned
+          path: build/ipa/Still-Camera-unsigned.ipa
+          retention-days: 14
