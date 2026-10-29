@@ -16,7 +16,7 @@ No ads, subscriptions, in-app purchases, server, analytics SDK, or account. Phot
 
 ## Build and install
 
-See [BUILDING.md](BUILDING.md) for Android APK and iPhone IPA instructions, signing requirements, verification, and device-dependent camera limits. The repository includes an APK/IPA GitHub Actions workflow and local build scripts. iOS binaries require a Mac build and Apple signing before installation.
+See [INSTALL.md](INSTALL.md) to install the Android APK or sign the iPhone IPA with your Apple account. See [BUILDING.md](BUILDING.md) for build instructions, verification, and device-dependent camera limits. The repository includes an APK/IPA GitHub Actions workflow and local build scripts. iOS binaries require a Mac build and Apple signing before installation.
 
 ## Implementation
 

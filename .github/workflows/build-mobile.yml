@@ -61,6 +61,8 @@ jobs:
           cp -R build/ios/iphoneos/Runner.app build/ipa/Payload/Still.app
           cd build/ipa
           zip -q -r -y Still-Camera-unsigned.ipa Payload
+      - name: Verify iPhone package
+        run: python3 scripts/verify-ipa.py build/ipa/Still-Camera-unsigned.ipa
       - uses: actions/upload-artifact@v4
         with:
           name: Still-Camera-iPhone-unsigned

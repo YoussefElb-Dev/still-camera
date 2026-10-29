@@ -14,6 +14,10 @@ An IPA contains a compiled iOS application, so compilation requires macOS and Xc
 
 The included **Build APK and IPA** GitHub Actions workflow builds on a macOS runner and produces `Still-Camera-unsigned.ipa`. You can also run `bash scripts/build-ios.sh` on a Mac. The IPA is compiled for real ARM64 iPhones, not the simulator.
 
+The public source repository is [YoussefElb-Dev/still-camera](https://github.com/YoussefElb-Dev/still-camera). Standard GitHub-hosted runners are [free for public repositories](https://docs.github.com/en/billing/concepts/product-billing/github-actions).
+
+After downloading the IPA, `python scripts/verify-ipa.py Still-Camera-unsigned.ipa` checks the archive integrity, expected app identifier, camera permission descriptions, physical-device platform, and ARM64 app/framework binaries. This requires Python 3.11 or newer and uses only its standard library.
+
 An **unsigned IPA is not directly installable**. Sign it with your Apple account using a sideloading tool such as Sideloadly or AltStore, or open `ios/Runner.xcworkspace` in Xcode and use your own development team. This app does not require a paid developer account for personal testing; Apple’s personal-signing restrictions still apply. App Store or TestFlight distribution requires the appropriate Apple developer enrollment and provisioning. No Apple credentials are stored in this project.
 
 To produce an Apple-distribution IPA on a configured Mac, set the Runner signing team and bundle identifier in Xcode, then run `flutter build ipa`. See [Flutter’s iOS release guide](https://docs.flutter.dev/deployment/ios).
